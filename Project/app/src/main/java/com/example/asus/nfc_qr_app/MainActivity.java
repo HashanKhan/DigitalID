@@ -4,10 +4,12 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.nfc.tech.NdefFormatable;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,31 +19,40 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.asus.nfc_qr_app.db.DBContract;
+
+import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getName();
+    MainActivity1 ma = new MainActivity1();
     NfcAdapter nfcAdapter;
     private Button btnvalidate;
+    private TextView ID;
     private EditText id;
     private RequestQueue requestQueue;
     private StringRequest stringRequest;
     //private String usersurl = "http://192.168.8.101:8080/user/users";
-    private String userurl = "http://192.168.8.100:8080/user/";
+    private String userurl = "http://192.168.8.101:8080/user/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ID = (TextView) findViewById(R.id.textViewid);
         id = (EditText) findViewById(R.id.editTextID);
-        btnvalidate = (Button) findViewById(R.id.buttonvalidate);
+        /*btnvalidate = (Button) findViewById(R.id.buttonvalidate);
         btnvalidate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,11 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 id.setText("");
                 //sendRequestAndPrintResponse();
             }
-        });
-
-
-
-
+        });*/
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
@@ -69,76 +76,74 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onNewIntent(Intent intent) {
-        Toast.makeText(this,"NFC Intent Recieved!",Toast.LENGTH_LONG).show();
         super.onNewIntent(intent);
+
+        if (intent.hasExtra(NfcAdapter.EXTRA_TAG)){
+            Toast.makeText(this,"NFC Intent Recieved!",Toast.LENGTH_LONG).show();
+            Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+
+            Parcelable[] parcelables = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
+
+            if (parcelables != null && parcelables.length > 0){
+                readTextFromMessage((NdefMessage) parcelables[0]);
+            }else {
+                Toast.makeText(this,"No NDEF Message Found!!!",Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override
     protected void onResume() {
-        Intent intent = new Intent(this,MainActivity.class);
-        intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING);
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,0);
-        IntentFilter[] intentFilter = new IntentFilter[]{};
-
-        nfcAdapter.enableForegroundDispatch(this,pendingIntent,intentFilter,null);
-
         super.onResume();
+        enableForegroundDispatchSystem();
     }
 
     @Override
     protected void onPause() {
-        nfcAdapter.disableForegroundDispatch(this);
         super.onPause();
+        disableForegroundDispatchSystem();
     }
 
-    private void formatTag(Tag tag, NdefMessage ndefMessage){
+    private void enableForegroundDispatchSystem(){
+        Intent intent = new Intent(this,MainActivity.class).addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,0);
+        IntentFilter[] intentFilters = new IntentFilter[] {};
+        nfcAdapter.enableForegroundDispatch(this,pendingIntent,intentFilters,null);
+    }
+
+    private void disableForegroundDispatchSystem(){
+        nfcAdapter.disableForegroundDispatch(this);
+    }
+
+    public String getTextFromNdefRecord(NdefRecord ndefRecord){
+        String tagContent = null;
         try {
-            NdefFormatable ndefFormatable = NdefFormatable.get(tag);
-
-            if (ndefFormatable == null){
-                Toast.makeText(this,"Tag is not ndfe formatable",Toast.LENGTH_LONG).show();
-            }
-
-            ndefFormatable.connect();
-            ndefFormatable.format(ndefMessage);
-            ndefFormatable.close();
-
-            Toast.makeText(this,"Tag written.",Toast.LENGTH_SHORT).show();
-
-        }catch (Exception e){
-            Log.e("formatTag",e.getMessage());
+            byte[] payload = ndefRecord.getPayload();
+            String textEncoding = ((payload[0] & 128) == 0) ? "UTF-8" : "UTF-16";
+            int languageSize = payload[0] & 0063;
+            tagContent = new String(payload, languageSize + 1, payload.length - languageSize - 1, textEncoding);
+        }catch (UnsupportedEncodingException e){
+            Log.e("getTextFromNdefRecord", e.getMessage(), e);
         }
+        return tagContent;
     }
 
-    private void writeNdefMessage(Tag tag,NdefMessage ndefMessage){
-        try {
-            if (tag == null){
-                Toast.makeText(this,"Tag Object can't be null.",Toast.LENGTH_SHORT).show();
-                return;
-            }
+    private void readTextFromMessage(NdefMessage ndefMessage){
+        NdefRecord[] ndefRecords = ndefMessage.getRecords();
 
-            Ndef ndef = Ndef.get(tag);
+        if (ndefRecords != null && ndefRecords.length > 0){
+            NdefRecord ndefRecord = ndefRecords[0];
+            String tagcontent = getTextFromNdefRecord(ndefRecord);
+            ID.setText(tagcontent);
+            //id.setText(tagContent);
 
-            if (ndef == null){
-                formatTag(tag,ndefMessage);
-            }else {
-                ndef.connect();
-
-                if (!ndef.isWritable()){
-                    Toast.makeText(this,"Tag is not writable.",Toast.LENGTH_SHORT).show();
-                    ndef.close();
-                    return;
-                }
-
-                ndef.writeNdefMessage(ndefMessage);
-                ndef.close();
-
-                Toast.makeText(this,"Tag written.",Toast.LENGTH_SHORT).show();
-            }
-
-        }catch (Exception e){
-            Log.e("writeNdefMessage",e.getMessage());
+            //String regno = id.getText().toString();
+            String regno = ID.getText().toString();
+            String url = userurl + regno;
+            sendIdAndCheckValidity(url);
+            id.setText("");
+        }else {
+            Toast.makeText(this,"No NDEF records found!!!",Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -185,9 +190,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.i(TAG,"Error :" + error.toString());
-                textViewstatus.setText("Inavalid User!!!");
+                textViewstatus.setText("Error!!!");
             }
         });
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                50000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
         requestQueue.add(stringRequest);
     }
 }

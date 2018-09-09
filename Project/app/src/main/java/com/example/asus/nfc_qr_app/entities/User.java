@@ -1,28 +1,18 @@
 package com.example.asus.nfc_qr_app.entities;
 
-import java.sql.Blob;
-
 public class User {
-    private String regno;
     private String name;
+    private String regno;
     private String nic;
     private String photo;
     private int sync_status;
 
-    public User(String regno, String name, String nic, String photo, int sync_status){
-        this.setRegno(regno);
-        this.setName(name);
-        this.setNic(nic);
-        this.setPhoto(photo);
-        this.setSync_status(sync_status);
-    }
-
-    public String getRegno() {
-        return regno;
-    }
-
-    public void setRegno(String regno) {
+    public User(String name, String regno, String nic, String photo, int sync_status){
+        this.name = name;
         this.regno = regno;
+        this.nic = nic;
+        this.photo = photo;
+        this.sync_status = sync_status;
     }
 
     public String getName() {
@@ -31,6 +21,14 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getRegno() {
+        return regno;
+    }
+
+    public void setRegno(String regno) {
+        this.regno = regno;
     }
 
     public String getNic() {

@@ -5,13 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import java.sql.Blob;
 
 public class DbHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
-    private static final String CREATE_TABLE = "create table " + DBContract.TABLE_NAME + "(regno text primary key,"
-            + DBContract.NAME +" text,"+ DBContract.NIC +" text,"+ DBContract.PHOTO +" blob," + DBContract.SYNC_STATUS +" integer);";
+    private static final String CREATE_TABLE = "create table "+ DBContract.TABLE_NAME + "(" + DBContract.NAME +" text,"
+            + DBContract.REGNO +" text primary key,"+ DBContract.NIC +" text,"+ DBContract.PHOTO +" blob,"
+            + DBContract.SYNC_STATUS +" integer)";
 
     private static final String DROP_TABLE = "drop table if exists "+DBContract.TABLE_NAME;
 

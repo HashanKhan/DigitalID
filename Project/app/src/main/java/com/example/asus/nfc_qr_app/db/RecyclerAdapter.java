@@ -29,7 +29,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.Regno.setText(arrayList.get(position).getRegno());
+        holder.Name.setText(arrayList.get(position).getName());
         int sync_status = arrayList.get(position).getSync_status();
 
         if (sync_status == DBContract.sync_status_ok){
@@ -47,12 +47,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         ImageView sync_status;
-        TextView Regno;
+        TextView Name;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             sync_status = (ImageView)itemView.findViewById(R.id.syncimage);
-            Regno = (TextView)itemView.findViewById(R.id.textNum);
+            Name = (TextView)itemView.findViewById(R.id.textName);
         }
     }
 }

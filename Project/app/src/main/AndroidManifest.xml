@@ -38,7 +38,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UserActivity"></activity>
+        <activity android:name=".UserActivity" />
+        <activity android:name=".MainActivity1" />
+        <activity android:name=".MainActivity2" />
+        <activity android:name=".MainActivity3"></activity>
     </application>
 
 </manifest>

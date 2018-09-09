@@ -87,7 +87,7 @@ public class Navigation extends AppCompatActivity
 
         switch (id){
 
-            case R.id.nav_Main:
+            case R.id.nav_Reader:
                 Intent intent= new Intent(Navigation.this,MainActivity.class);
                 startActivity(intent);
                 break;
@@ -95,17 +95,18 @@ public class Navigation extends AppCompatActivity
                 Intent intent1= new Intent(Navigation.this,UserActivity.class);
                 startActivity(intent1);
                 break;
-            /*case R.id.nav_gallery:
-                Intent g= new Intent(Home.this,Gallery.class);
-                startActivity(g);
+            case R.id.nav_Writer:
+                Intent intent2= new Intent(Navigation.this,MainActivity1.class);
+                startActivity(intent2);
                 break;
-            case R.id.nav_slideshow:
-                Intent s= new Intent(Home.this,Slideshow.class);
-                startActivity(s);
-            case R.id.nav_tools:
-                Intent t= new Intent(Home.this,Tools.class);
-                startActivity(t);
-                break;*/
+            case R.id.nav_Gen:
+                Intent intent3= new Intent(Navigation.this,MainActivity2.class);
+                startActivity(intent3);
+                break;
+            case R.id.nav_Scan:
+                Intent intent4= new Intent(Navigation.this,MainActivity3.class);
+                startActivity(intent4);
+                break;
         }
 
 

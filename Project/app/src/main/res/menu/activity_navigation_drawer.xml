@@ -6,19 +6,23 @@
     <group android:checkableBehavior="single"/>
 
         <item
-            android:id="@+id/nav_Main"
-            android:icon="@drawable/ic_home"
-            android:title="Main Console" />
+            android:id="@+id/nav_Reader"
+            android:icon="@drawable/baseline_nfc_24"
+            android:title="Reader" />
+        <item
+            android:id="@+id/nav_Writer"
+            android:icon="@drawable/baseline_tap_and_play_24"
+            android:title="Writer" />
+        <item
+            android:id="@+id/nav_Gen"
+            android:icon="@drawable/baseline_settings_black_24"
+            android:title="QR Code Generator" />
+        <item
+            android:id="@+id/nav_Scan"
+            android:icon="@drawable/baseline_speaker_phone_black_24"
+            android:title="QR Code Scanner" />
         <item
             android:id="@+id/nav_User"
             android:icon="@drawable/baseline_account_box_24"
             android:title="User Account" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
 </menu>

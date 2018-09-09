@@ -13,7 +13,7 @@
         android:layout_marginRight="22dp">
 
         <TextView
-            android:id="@+id/textNum"
+            android:id="@+id/textName"
             android:layout_width="235dp"
             android:layout_height="wrap_content"
             android:gravity="center"

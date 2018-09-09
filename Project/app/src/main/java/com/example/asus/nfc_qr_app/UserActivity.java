@@ -59,7 +59,7 @@ public class UserActivity extends AppCompatActivity {
         editText.setText("");
     }
 
-    private void readFromLocaleStorage(){
+    public void readFromLocaleStorage(){
         arrayList.clear();
         DbHelper dbHelper = new DbHelper(this);
         SQLiteDatabase database = dbHelper.getReadableDatabase();
@@ -72,9 +72,8 @@ public class UserActivity extends AppCompatActivity {
             String nic = cursor.getString(cursor.getColumnIndex(DBContract.NIC));
             String photo = cursor.getString(cursor.getColumnIndex(DBContract.PHOTO));
             int sync_status = cursor.getInt(cursor.getColumnIndex(DBContract.SYNC_STATUS));
-            arrayList.add(new User(regno,name,nic,photo,sync_status));
+            arrayList.add(new User(name,regno,nic,photo,sync_status));
         }
-
         adapter.notifyDataSetChanged();
         cursor.close();
         dbHelper.close();
@@ -119,7 +118,7 @@ public class UserActivity extends AppCompatActivity {
     private void saveToLocaleStorage(String name, String regno, String nic, String photo, int sync_status){
         DbHelper dbHelper = new DbHelper(this);
         SQLiteDatabase database = dbHelper.getWritableDatabase();
-        dbHelper.saveToLocaleDataBase(regno,name,nic,photo,sync_status,database);
+        dbHelper.saveToLocaleDataBase(name,regno,nic,photo,sync_status,database);
         readFromLocaleStorage();
         dbHelper.close();
     }
