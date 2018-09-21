@@ -4,7 +4,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import net.sqlcipher.database.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.nfc.NdefMessage;
@@ -32,6 +32,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import static com.example.asus.nfc_qr_app.db.DbHelper.PASS_PHRASE;
+
 public class MainActivity1 extends AppCompatActivity {
     NfcAdapter nfcAdapter;
     private TextView id;
@@ -43,7 +45,7 @@ public class MainActivity1 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main1);
 
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        SQLiteDatabase db = dbHelper.getReadableDatabase(PASS_PHRASE);
         Cursor cursor = dbHelper.readFromLocaleDataBase(db);
 
         String name = "";

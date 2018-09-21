@@ -6,7 +6,7 @@ public class DBContract {
     public static final String SERVER_URL = "http://192.168.8.100:8080/user/";
 
 
-    public static final String DATABASE_NAME = "cdap";
+    public static final String DATABASE_NAME = "cdap.db";
     public static final String TABLE_NAME = "users";
 
 

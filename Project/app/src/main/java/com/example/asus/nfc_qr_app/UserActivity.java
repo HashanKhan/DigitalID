@@ -2,7 +2,7 @@ package com.example.asus.nfc_qr_app;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import net.sqlcipher.database.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +30,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import static com.example.asus.nfc_qr_app.db.DbHelper.PASS_PHRASE;
+
 public class UserActivity extends AppCompatActivity {
     private static final String TAG = UserActivity.class.getName();
     RecyclerView recyclerView;
@@ -42,6 +44,7 @@ public class UserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
+        SQLiteDatabase.loadLibs(this);
         recyclerView = (RecyclerView) findViewById(R.id.recylerview);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -62,7 +65,7 @@ public class UserActivity extends AppCompatActivity {
     public void readFromLocaleStorage(){
         arrayList.clear();
         DbHelper dbHelper = new DbHelper(this);
-        SQLiteDatabase database = dbHelper.getReadableDatabase();
+        SQLiteDatabase database = dbHelper.getReadableDatabase(PASS_PHRASE);
 
         Cursor cursor = dbHelper.readFromLocaleDataBase(database);
 
@@ -117,7 +120,7 @@ public class UserActivity extends AppCompatActivity {
 
     private void saveToLocaleStorage(String name, String regno, String nic, String photo, int sync_status){
         DbHelper dbHelper = new DbHelper(this);
-        SQLiteDatabase database = dbHelper.getWritableDatabase();
+        SQLiteDatabase database = dbHelper.getWritableDatabase(PASS_PHRASE);
         dbHelper.saveToLocaleDataBase(name,regno,nic,photo,sync_status,database);
         readFromLocaleStorage();
         dbHelper.close();

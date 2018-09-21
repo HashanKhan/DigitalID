@@ -1,7 +1,7 @@
 package com.example.asus.nfc_qr_app;
 
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import net.sqlcipher.database.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,6 +28,8 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
+import static com.example.asus.nfc_qr_app.db.DbHelper.PASS_PHRASE;
+
 public class MainActivity2 extends AppCompatActivity {
     private static final String TAG = MainActivity2.class.getName();
     TextView text;
@@ -43,7 +45,7 @@ public class MainActivity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        SQLiteDatabase db = dbHelper.getReadableDatabase(PASS_PHRASE);
         Cursor cursor = dbHelper.readFromLocaleDataBase(db);
 
         String name = "";
