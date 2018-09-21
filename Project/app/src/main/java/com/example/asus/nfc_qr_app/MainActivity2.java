@@ -37,7 +37,7 @@ public class MainActivity2 extends AppCompatActivity {
     DbHelper dbHelper = new DbHelper(this);
     private RequestQueue requestQueue;
     private StringRequest stringRequest;
-    private String userurl = "http://192.168.1.100:8080/user/";
+    private String userurl = "http://192.168.8.100:8080/user/";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,18 +93,22 @@ public class MainActivity2 extends AppCompatActivity {
                         BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
                         Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
                         image.setImageBitmap(bitmap);
+                        requestQueue.stop();
                     }catch (WriterException e){
                         e.printStackTrace();
+                        requestQueue.stop();
                     }
                 }
                 else {
                     Log.i(TAG,"Inavalid User!!!");
+                    requestQueue.stop();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.i(TAG,"Error :" + error.toString());
+                requestQueue.stop();
             }
         });
 

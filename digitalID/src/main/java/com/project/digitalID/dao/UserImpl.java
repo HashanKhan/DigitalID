@@ -53,7 +53,7 @@ public class UserImpl implements UserDAO{
 				user.setName(rs.getString("name"));
 				user.setRegno(rs.getString("regno"));
 				user.setNic(rs.getString("nic"));
-				user.setPhoto(rs.getBlob("photo").toString());
+				user.setPhoto(rs.getBytes("photo"));
 				return user;
 		}
 	}

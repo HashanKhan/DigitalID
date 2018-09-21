@@ -1,5 +1,7 @@
 package com.project.digitalID.models;
 
+import java.sql.Blob;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,7 +27,7 @@ public class User {
 	@Column(name = "photo")
 	@Lob
 	@Basic(fetch=FetchType.LAZY)
-	private String photo;
+	private byte[] photo;
 	
 	public User() {
 		super();
@@ -60,11 +62,11 @@ public class User {
 		this.nic = nic;
 	}
 
-	public String getPhoto() {
+	public byte[] getPhoto() {
 		return photo;
 	}
 
-	public void setPhoto(String photo) {
+	public void setPhoto(byte[] photo) {
 		this.photo = photo;
-	}	
+	}
 }

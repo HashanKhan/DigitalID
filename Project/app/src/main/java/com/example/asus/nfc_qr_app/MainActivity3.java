@@ -32,7 +32,7 @@ public class MainActivity3 extends AppCompatActivity {
     private TextView textView;
     private RequestQueue requestQueue;
     private StringRequest stringRequest;
-    private String userurl = "http://192.168.1.100:8080/user/";
+    private String userurl = "http://192.168.8.100:8080/user/";
     private String idnum;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,16 +80,19 @@ public class MainActivity3 extends AppCompatActivity {
                 if (url != null){
                     Log.i(TAG,"Response :" + response.toString());
                     textView.setText("Valid User");
+                    requestQueue.stop();
                 }
                 else {
                     Log.i(TAG,"Inavalid User!!!");
                     textView.setText("Inavalid User!!!");
+                    requestQueue.stop();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.i(TAG,"Error :" + error.toString());
+                requestQueue.stop();
             }
         });
 

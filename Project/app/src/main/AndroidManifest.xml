@@ -18,7 +18,7 @@
 
     <uses-feature
         android:name="android.hardware.nfc"
-        android:required="false" />
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -27,7 +27,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".MainActivity" >
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".Navigation"
             android:label="@string/title_activity_navigation"
@@ -38,10 +45,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".UserActivity" />
-        <activity android:name=".MainActivity1" />
+
+        <activity android:name=".MainActivity1" >
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".MainActivity2" />
+
         <activity android:name=".MainActivity3"></activity>
+
+
     </application>
 
 </manifest>

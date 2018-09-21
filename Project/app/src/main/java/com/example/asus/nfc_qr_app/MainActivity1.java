@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
@@ -13,7 +15,11 @@ import android.nfc.tech.Ndef;
 import android.nfc.tech.NdefFormatable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +35,7 @@ import java.util.Locale;
 public class MainActivity1 extends AppCompatActivity {
     NfcAdapter nfcAdapter;
     private TextView id;
+    private ImageView image;
     DbHelper dbHelper = new DbHelper(this);
 
     @Override
@@ -56,6 +63,11 @@ public class MainActivity1 extends AppCompatActivity {
         id = (TextView) findViewById(R.id.textViewid);
         id.setText(regno);
 
+        image = (ImageView) findViewById(R.id.imageViewUser);
+
+        Bitmap bm = StringToBitMap(photo);
+        image.setImageBitmap(bm);
+
         cursor.close();
         dbHelper.close();
 
@@ -69,14 +81,19 @@ public class MainActivity1 extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
+    protected void onNewIntent(View view) {
+        NdefMessage ndefMessage = createNdefMessage(id.getText()+"");
+        nfcAdapter.setNdefPushMessage(ndefMessage,this);
+    }
 
-        if (intent.hasExtra(NfcAdapter.EXTRA_TAG)){
-            Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-            NdefMessage ndefMessage = createNdefMessage(id.getText()+"");
-            writeNdefMessage(tag,ndefMessage);
+    public Bitmap StringToBitMap(String encodedString) {
+        try {
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch (Exception e) {
+            e.getMessage();
+            return null;
         }
     }
 

@@ -37,32 +37,18 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getName();
     MainActivity1 ma = new MainActivity1();
     NfcAdapter nfcAdapter;
-    private Button btnvalidate;
-    private TextView ID;
-    private EditText id;
+    private TextView id;
     private RequestQueue requestQueue;
     private StringRequest stringRequest;
-    //private String usersurl = "http://192.168.8.101:8080/user/users";
-    private String userurl = "http://192.168.8.101:8080/user/";
+    //private String usersurl = "http://192.168.8.100:8080/user/users";
+    private String userurl = "http://192.168.8.100:8080/user/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ID = (TextView) findViewById(R.id.textViewid);
-        id = (EditText) findViewById(R.id.editTextID);
-        /*btnvalidate = (Button) findViewById(R.id.buttonvalidate);
-        btnvalidate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String regno = id.getText().toString();
-                String url = userurl + regno;
-                sendIdAndCheckValidity(url);
-                id.setText("");
-                //sendRequestAndPrintResponse();
-            }
-        });*/
+        id = (TextView) findViewById(R.id.textviewID);
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
@@ -134,11 +120,9 @@ public class MainActivity extends AppCompatActivity {
         if (ndefRecords != null && ndefRecords.length > 0){
             NdefRecord ndefRecord = ndefRecords[0];
             String tagcontent = getTextFromNdefRecord(ndefRecord);
-            ID.setText(tagcontent);
-            //id.setText(tagContent);
+            id.setText(tagcontent);
 
-            //String regno = id.getText().toString();
-            String regno = ID.getText().toString();
+            String regno = id.getText().toString();
             String url = userurl + regno;
             sendIdAndCheckValidity(url);
             id.setText("");
@@ -180,10 +164,12 @@ public class MainActivity extends AppCompatActivity {
                 if (url != null){
                     Log.i(TAG,"Response :" + response.toString());
                     textViewstatus.setText("Valid User.");
+                    requestQueue.stop();
                 }
                 else {
                     Log.i(TAG,"Inavalid User!!!");
                     textViewstatus.setText("Inavalid User!!!");
+                    requestQueue.stop();
                 }
             }
         }, new Response.ErrorListener() {
@@ -191,6 +177,7 @@ public class MainActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 Log.i(TAG,"Error :" + error.toString());
                 textViewstatus.setText("Error!!!");
+                requestQueue.stop();
             }
         });
 
