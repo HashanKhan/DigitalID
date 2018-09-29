@@ -1,7 +1,5 @@
 package com.project.digitalID.models;
 
-import java.sql.Blob;
-
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,6 +26,12 @@ public class User {
 	@Lob
 	@Basic(fetch=FetchType.LAZY)
 	private byte[] photo;
+	
+	@Column(name = "username")
+	private String username;
+	
+	@Column(name = "password")
+	private String password;
 	
 	public User() {
 		super();
@@ -68,5 +72,21 @@ public class User {
 
 	public void setPhoto(byte[] photo) {
 		this.photo = photo;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 }

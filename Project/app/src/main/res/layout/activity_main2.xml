@@ -6,62 +6,129 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity2">
 
+    <ImageView
+        android:id="@+id/imageViewUser"
+        android:layout_width="126dp"
+        android:layout_height="109dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="182dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.416"
+        app:srcCompat="@drawable/baseline_account_box_black_48" />
+
     <TextView
         android:id="@+id/textViewTitle"
-        android:layout_width="284dp"
+        android:layout_width="322dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="12dp"
         android:text="@string/QRtitle"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <Button
-        android:id="@+id/buttonGenerate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="139dp"
-        android:text="@string/ButtonGen"
-        android:textAlignment="center"
+        android:textSize="24sp"
         android:textStyle="bold" />
 
     <View
         android:id="@+id/view"
-        android:layout_width="335dp"
-        android:layout_height="280dp"
+        android:layout_width="195dp"
+        android:layout_height="195dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="27dp"
-        android:layout_marginStart="13dp"
+        android:layout_centerHorizontal="true"
         android:background="@android:color/black" />
 
     <LinearLayout
         android:layout_width="338dp"
         android:layout_height="280dp"
-        android:layout_alignBottom="@+id/view"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="1dp">
+        android:layout_alignTop="@+id/view"
+        android:layout_centerHorizontal="true">
 
         <ImageView
             android:id="@+id/imageid"
-            android:layout_width="match_parent"
-            android:layout_height="280dp" />
+            android:layout_width="335dp"
+            android:layout_height="200dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="15dp" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/textViewidnum"
-        android:layout_width="177dp"
-        android:layout_height="32dp"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="66dp"
-        android:text="@string/regnohint"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="61dp"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Button"
-        android:textSize="24sp" />
+        android:textSize="18sp" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="204dp"
+        android:background="?android:attr/listDivider"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/textViewName"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/textViewTitle"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="104dp"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Button"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textViewNIC"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/textViewTitle"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="142dp"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Button"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textViewID"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textViewTitle"
+        android:layout_alignTop="@+id/textViewidnum"
+        android:text="@string/id"
+        android:textAlignment="viewStart"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textViewNM"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textViewTitle"
+        android:layout_alignTop="@+id/textViewName"
+        android:text="@string/name"
+        android:textAlignment="viewStart"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textViewNC"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textViewTitle"
+        android:layout_alignTop="@+id/textViewNIC"
+        android:text="@string/nic"
+        android:textAlignment="viewStart"
+        android:textSize="18sp" />
+
 </RelativeLayout>

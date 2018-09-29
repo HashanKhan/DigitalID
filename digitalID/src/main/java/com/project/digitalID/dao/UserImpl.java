@@ -29,7 +29,7 @@ public class UserImpl implements UserDAO{
 
 	public List<User> getListUser() {
 		List<User> list = new ArrayList<User>();
-		String sql = "SELECT name,regno,nic,photo FROM users";
+		String sql = "SELECT name,regno,nic,photo,username,password FROM users";
 		list = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(null), new UserMapper());
 		return list;
 	}
@@ -42,6 +42,8 @@ public class UserImpl implements UserDAO{
 			paramSource.addValue("regno", user.getRegno());
 			paramSource.addValue("nic", user.getNic());
 			paramSource.addValue("photo", user.getPhoto());
+			paramSource.addValue("username", user.getUsername());
+			paramSource.addValue("password", user.getPassword());
 		}
 		return paramSource;
 	}
@@ -54,6 +56,8 @@ public class UserImpl implements UserDAO{
 				user.setRegno(rs.getString("regno"));
 				user.setNic(rs.getString("nic"));
 				user.setPhoto(rs.getBytes("photo"));
+				user.setUsername(rs.getString("username"));
+				user.setPassword(rs.getString("password"));
 				return user;
 		}
 	}

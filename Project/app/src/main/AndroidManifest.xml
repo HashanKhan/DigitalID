@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.asus.nfc_qr_app">
-
-    <uses-sdk
-        android:minSdkVersion="23"
-        android:targetSdkVersion="27" />
+    package="com.example.asus.student_app">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -27,18 +23,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".MainActivity" >
-            <intent-filter>
-                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
 
         <activity
-            android:name=".Navigation"
+            android:name="com.example.asus.student_app.Navigation"
             android:label="@string/title_activity_navigation"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -46,18 +36,24 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".UserActivity" />
+        <activity android:name="com.example.asus.student_app.UserActivity"
+            android:screenOrientation="portrait"/>
 
-        <activity android:name=".MainActivity1" >
+        <activity android:name="com.example.asus.student_app.MainActivity2"
+            android:screenOrientation="portrait">
+        <intent-filter>
+            <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+        </activity>
+
+        <activity android:name="com.example.asus.student_app.MainActivity3"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".MainActivity2" />
-
-        <activity android:name=".MainActivity3"></activity>
 
 
     </application>
